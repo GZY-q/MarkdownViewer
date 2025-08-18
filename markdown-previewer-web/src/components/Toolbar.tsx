@@ -1,4 +1,5 @@
 import React from 'react';
+import ThemeToggle from './ThemeToggle';
 import './Toolbar.css';
 
 interface ToolbarProps {
@@ -83,30 +84,36 @@ const Toolbar: React.FC<ToolbarProps> = ({
 
   return (
     <div className="toolbar">
-      <div className="toolbar-group">
-        {toolbarItems.map((item, index) => (
-          <button
-            key={index}
-            className="toolbar-button"
-            onClick={item.action}
-            title={`${item.title} (${item.shortcut})`}
-          >
-            <span className="toolbar-icon">{item.icon}</span>
-          </button>
-        ))}
+      <div className="toolbar-left">
+        <div className="toolbar-group">
+          {toolbarItems.map((item, index) => (
+            <button
+              key={index}
+              className="toolbar-button"
+              onClick={item.action}
+              title={`${item.title} (${item.shortcut})`}
+            >
+              <span className="toolbar-icon">{item.icon}</span>
+            </button>
+          ))}
+        </div>
+        
+        {onTogglePreview && (
+          <div className="toolbar-group">
+            <button
+              className={`toolbar-button ${showPreview ? 'active' : ''}`}
+              onClick={onTogglePreview}
+              title="切换预览"
+            >
+              <span className="toolbar-icon">👁️</span>
+            </button>
+          </div>
+        )}
       </div>
       
-      {onTogglePreview && (
-        <div className="toolbar-group">
-          <button
-            className={`toolbar-button ${showPreview ? 'active' : ''}`}
-            onClick={onTogglePreview}
-            title="切换预览"
-          >
-            <span className="toolbar-icon">👁️</span>
-          </button>
-        </div>
-      )}
+      <div className="toolbar-right">
+        <ThemeToggle />
+      </div>
     </div>
   );
 };

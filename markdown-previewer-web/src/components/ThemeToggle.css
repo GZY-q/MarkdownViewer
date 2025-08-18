@@ -1,0 +1,166 @@
+.theme-toggle {
+  position: relative;
+  display: inline-block;
+}
+
+.theme-toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+  justify-content: flex-start;
+}
+
+.theme-toggle-button:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-focus);
+}
+
+.theme-toggle-button:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.theme-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+.theme-label {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.theme-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 6px;
+  box-shadow: var(--shadow-md);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: all 0.2s ease;
+  margin-top: 4px;
+}
+
+.theme-toggle:hover .theme-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: left;
+}
+
+.theme-option:first-child {
+  border-radius: 6px 6px 0 0;
+}
+
+.theme-option:last-child {
+  border-radius: 0 0 6px 6px;
+}
+
+.theme-option:only-child {
+  border-radius: 6px;
+}
+
+.theme-option:hover {
+  background: var(--bg-hover);
+}
+
+.theme-option.active {
+  background: var(--bg-active);
+  color: var(--border-focus);
+  font-weight: 600;
+}
+
+.theme-option svg {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.theme-option.active svg {
+  color: var(--border-focus);
+}
+
+.theme-option span {
+  white-space: nowrap;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .theme-toggle-button {
+    min-width: 100px;
+    padding: 6px 10px;
+  }
+  
+  .theme-label {
+    display: none;
+  }
+  
+  .theme-toggle-button {
+    justify-content: center;
+  }
+}
+
+/* 键盘导航支持 */
+.theme-toggle:focus-within .theme-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.theme-option:focus {
+  outline: none;
+  background: var(--bg-hover);
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+  .theme-toggle-button {
+    border-width: 2px;
+  }
+  
+  .theme-option.active {
+    border-left: 3px solid var(--border-focus);
+  }
+}
+
+/* 减少动画模式支持 */
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-button,
+  .theme-dropdown,
+  .theme-option {
+    transition: none;
+  }
+}

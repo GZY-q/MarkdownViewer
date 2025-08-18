@@ -1,6 +1,9 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import MarkdownEditor from './components/MarkdownEditor'
+import { ThemeProvider } from './contexts/ThemeContext'
 import 'highlight.js/styles/github.css'
+import 'highlight.js/styles/github-dark.css'
+import './styles/themes.css'
 import './App.css'
 
 function App() {
@@ -35,7 +38,7 @@ function hello() {
 
 **粗体文本** 和 *斜体文本* 都得到了很好的支持。
 
-[访问GitHub](https://github.com) 了解更多信息。
+[访问GitHub](https://github.com/GZY-q/MarkdownViewer/tree/main) 了解更多信息。
 `);
 
   const handleContentChange = (newContent: string) => {
@@ -43,12 +46,14 @@ function hello() {
   };
 
   return (
-    <div className="app">
-      <MarkdownEditor 
-        initialContent={content}
-        onChange={handleContentChange}
-      />
-    </div>
+    <ThemeProvider>
+      <div className="app">
+        <MarkdownEditor 
+          initialContent={content}
+          onChange={handleContentChange}
+        />
+      </div>
+    </ThemeProvider>
   )
 }
 
