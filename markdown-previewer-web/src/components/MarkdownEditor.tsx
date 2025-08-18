@@ -39,24 +39,10 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
     []
   );
 
-  // 内容变化时更新预览
+  // 初始化预览内容
   useEffect(() => {
     debouncedUpdatePreview(content);
-  }, [content, debouncedUpdatePreview]);
-
-  // 设置Electron菜单事件监听器
-  useEffect(() => {
-    if (isElectron) {
-      const cleanup = setupMenuListeners({
-        onNewFile: handleNewFile,
-        onOpenFile: handleOpenFile,
-        onSaveFile: handleSaveFile,
-        onSaveAsFile: handleSaveAsFile,
-        onExportHtml: handleExportHtml,
-      });
-      return cleanup;
-    }
-  }, [isElectron, setupMenuListeners, handleNewFile, handleOpenFile, handleSaveFile, handleSaveAsFile, handleExportHtml]);
+  }, [debouncedUpdatePreview, content]);
 
   // 处理文本变化
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -123,7 +109,21 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
     setIsModified(false);
   }, [isModified]);
 
-  // 插入文本到光标位置
+   // 设置Electron菜单事件监听器
+   useEffect(() => {
+     if (isElectron) {
+       const cleanup = setupMenuListeners({
+         onNewFile: handleNewFile,
+         onOpenFile: handleOpenFile,
+         onSaveFile: handleSaveFile,
+         onSaveAsFile: handleSaveAsFile,
+         onExportHtml: handleExportHtml,
+       });
+       return cleanup;
+     }
+   }, [isElectron, setupMenuListeners, handleNewFile, handleOpenFile, handleSaveFile, handleSaveAsFile, handleExportHtml]);
+
+   // 插入文本到光标位置
   const insertTextAtCursor = useCallback((text: string, cursorOffset: number = 0) => {
     const textarea = textareaRef.current;
     if (!textarea) return;
@@ -251,6 +251,19 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
       />
     </div>
   );
+
+  // 获取窗口标题
+  const getWindowTitle = () => {
+    const fileName = currentFilePath ? currentFilePath.split('/').pop() || 'Untitled' : 'Untitled';
+    const modified = isModified ? ' *' : '';
+    const platform = isElectron ? ' - Electron' : ' - Web';
+    return `${fileName}${modified} - Markdown预览器${platform}`;
+  };
+
+  // 更新文档标题
+  useEffect(() => {
+    document.title = getWindowTitle();
+  }, [currentFilePath, isModified, isElectron]);
 
   return (
     <div className="markdown-editor">
