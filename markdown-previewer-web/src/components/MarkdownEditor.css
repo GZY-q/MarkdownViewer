@@ -1,0 +1,247 @@
+.markdown-editor {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-panel,
+.preview-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+}
+
+.editor-header,
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e1e5e9;
+  min-height: 48px;
+}
+
+.editor-header h3,
+.preview-header h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #24292f;
+}
+
+.editor-stats {
+  font-size: 12px;
+  color: #656d76;
+}
+
+.loading-indicator {
+  font-size: 12px;
+  color: #0969da;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.editor-textarea {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 16px;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: none;
+  background-color: #ffffff;
+  color: #24292f;
+}
+
+.editor-textarea::placeholder {
+  color: #8c959f;
+}
+
+.editor-textarea:focus {
+  background-color: #ffffff;
+}
+
+.preview-content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background-color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #24292f;
+}
+
+/* Markdown样式 */
+.preview-content h1,
+.preview-content h2,
+.preview-content h3,
+.preview-content h4,
+.preview-content h5,
+.preview-content h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.preview-content h1 {
+  font-size: 2em;
+  border-bottom: 1px solid #d1d9e0;
+  padding-bottom: 0.3em;
+}
+
+.preview-content h2 {
+  font-size: 1.5em;
+  border-bottom: 1px solid #d1d9e0;
+  padding-bottom: 0.3em;
+}
+
+.preview-content h3 {
+  font-size: 1.25em;
+}
+
+.preview-content h4 {
+  font-size: 1em;
+}
+
+.preview-content h5 {
+  font-size: 0.875em;
+}
+
+.preview-content h6 {
+  font-size: 0.85em;
+  color: #656d76;
+}
+
+.preview-content p {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.preview-content blockquote {
+  padding: 0 1em;
+  color: #656d76;
+  border-left: 0.25em solid #d1d9e0;
+  margin: 0 0 16px 0;
+}
+
+.preview-content blockquote > :first-child {
+  margin-top: 0;
+}
+
+.preview-content blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.preview-content ul,
+.preview-content ol {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding-left: 2em;
+}
+
+.preview-content li {
+  margin-bottom: 0.25em;
+}
+
+.preview-content code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+.preview-content pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.preview-content pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.preview-content table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-top: 0;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.preview-content table th,
+.preview-content table td {
+  padding: 6px 13px;
+  border: 1px solid #d1d9e0;
+}
+
+.preview-content table th {
+  font-weight: 600;
+  background-color: #f6f8fa;
+}
+
+.preview-content table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+.preview-content a {
+  color: #0969da;
+  text-decoration: none;
+}
+
+.preview-content a:hover {
+  text-decoration: underline;
+}
+
+.preview-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.preview-content hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #d1d9e0;
+  border: 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .editor-container {
+    flex-direction: column;
+  }
+  
+  .editor-panel {
+    border-right: none;
+    border-bottom: 1px solid #e1e5e9;
+  }
+  
+  .editor-panel,
+  .preview-panel {
+    min-height: 300px;
+  }
+}

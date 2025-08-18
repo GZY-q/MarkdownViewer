@@ -1,0 +1,143 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: #f6f8fa;
+  border-bottom: 1px solid #d1d9e0;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-height: 44px;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.toolbar-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  color: #24292f;
+}
+
+.toolbar-button:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d9e0;
+}
+
+.toolbar-button:active {
+  background-color: #e1e5e9;
+  transform: translateY(1px);
+}
+
+.toolbar-button.active {
+  background-color: #0969da;
+  color: #ffffff;
+  border-color: #0969da;
+}
+
+.toolbar-button.active:hover {
+  background-color: #0860ca;
+  border-color: #0860ca;
+}
+
+.toolbar-icon {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* 特殊按钮样式 */
+.toolbar-button[title*="粗体"] .toolbar-icon {
+  font-weight: 900;
+}
+
+.toolbar-button[title*="斜体"] .toolbar-icon {
+  font-style: italic;
+  font-weight: 600;
+}
+
+.toolbar-button[title*="标题"] .toolbar-icon {
+  font-weight: 900;
+  font-size: 14px;
+}
+
+.toolbar-button[title*="代码"] .toolbar-icon {
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 10px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .toolbar {
+    padding: 6px 8px;
+    gap: 4px;
+  }
+  
+  .toolbar-group {
+    gap: 2px;
+  }
+  
+  .toolbar-button {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+  
+  .toolbar-icon {
+    font-size: 10px;
+  }
+  
+  .toolbar-button[title*="标题"] .toolbar-icon {
+    font-size: 12px;
+  }
+}
+
+/* 工具提示样式增强 */
+.toolbar-button {
+  position: relative;
+}
+
+.toolbar-button::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #24292f;
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.toolbar-button:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 分组分隔线 */
+.toolbar-group:not(:last-child)::after {
+  content: '';
+  width: 1px;
+  height: 20px;
+  background-color: #d1d9e0;
+  margin-left: 8px;
+}
