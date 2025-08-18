@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { parseMarkdown, debounce } from '../utils/markdown';
 import ResizablePanes from './ResizablePanes';
 import Toolbar from './Toolbar';
+import { useElectron } from '../hooks/useElectron';
 import './MarkdownEditor.css';
 
 interface MarkdownEditorProps {
@@ -16,7 +17,10 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
   const [content, setContent] = useState(initialContent);
   const [preview, setPreview] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [currentFilePath, setCurrentFilePath] = useState<string | null>(null);
+  const [isModified, setIsModified] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { isElectron, saveFile, exportHtml, setupMenuListeners } = useElectron();
 
   // 防抖更新预览
   const debouncedUpdatePreview = useCallback(
@@ -40,12 +44,84 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
     debouncedUpdatePreview(content);
   }, [content, debouncedUpdatePreview]);
 
+  // 设置Electron菜单事件监听器
+  useEffect(() => {
+    if (isElectron) {
+      const cleanup = setupMenuListeners({
+        onNewFile: handleNewFile,
+        onOpenFile: handleOpenFile,
+        onSaveFile: handleSaveFile,
+        onSaveAsFile: handleSaveAsFile,
+        onExportHtml: handleExportHtml,
+      });
+      return cleanup;
+    }
+  }, [isElectron, setupMenuListeners, handleNewFile, handleOpenFile, handleSaveFile, handleSaveAsFile, handleExportHtml]);
+
   // 处理文本变化
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = e.target.value;
     setContent(newContent);
+    setIsModified(true);
     onChange?.(newContent);
   };
+
+  // 文件操作函数
+  const handleNewFile = useCallback(() => {
+    if (isModified) {
+      const confirmed = window.confirm('当前文件未保存，确定要新建文件吗？');
+      if (!confirmed) return;
+    }
+    setContent('');
+    setCurrentFilePath(null);
+    setIsModified(false);
+  }, [isModified]);
+
+  const handleSaveFile = useCallback(async () => {
+    try {
+      const result = await saveFile(currentFilePath, content);
+      if (result.success && !result.canceled) {
+        setIsModified(false);
+        if (result.filePath) {
+          setCurrentFilePath(result.filePath);
+        }
+      }
+    } catch (error) {
+      console.error('保存文件失败:', error);
+    }
+  }, [saveFile, currentFilePath, content]);
+
+  const handleSaveAsFile = useCallback(async () => {
+    try {
+      const result = await saveFile(null, content);
+      if (result.success && !result.canceled) {
+        setIsModified(false);
+        if (result.filePath) {
+          setCurrentFilePath(result.filePath);
+        }
+      }
+    } catch (error) {
+      console.error('另存为文件失败:', error);
+    }
+  }, [saveFile, content]);
+
+  const handleExportHtml = useCallback(async () => {
+    try {
+      await exportHtml(preview);
+    } catch (error) {
+      console.error('导出HTML失败:', error);
+    }
+  }, [exportHtml, preview]);
+
+  const handleOpenFile = useCallback((filePath: string, fileContent: string) => {
+    if (isModified) {
+      const confirmed = window.confirm('当前文件未保存，确定要打开新文件吗？');
+      if (!confirmed) return;
+    }
+    setContent(fileContent);
+    setCurrentFilePath(filePath);
+    setIsModified(false);
+  }, [isModified]);
 
   // 插入文本到光标位置
   const insertTextAtCursor = useCallback((text: string, cursorOffset: number = 0) => {

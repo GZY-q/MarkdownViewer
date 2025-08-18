@@ -1,13 +1,20 @@
 {
   "name": "markdown-previewer-web",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
+  "description": "跨平台Markdown预览器",
+  "author": "Your Name",
+  "main": "public/electron.js",
+  "homepage": "./",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "electron": "electron .",
+    "electron-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && electron .\"",
+    "build-electron": "npm run build && electron-builder",
+    "dist": "npm run build && electron-builder --publish=never"
   },
   "dependencies": {
     "@types/marked": "^5.0.2",
@@ -28,5 +35,43 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.39.1",
     "vite": "^7.1.2"
+  },
+  "build": {
+    "appId": "com.example.markdown-previewer",
+    "productName": "Markdown预览器",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "public/electron.js",
+      "public/preload.js",
+      "node_modules/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        }
+      ]
+    }
   }
 }
