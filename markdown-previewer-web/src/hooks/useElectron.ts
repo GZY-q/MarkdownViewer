@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 
 // 类型定义
 interface ElectronAPI {
@@ -112,7 +112,7 @@ ${content}
       electronAPI.onMenuNewFile(handlers.onNewFile);
     }
     if (handlers.onOpenFile) {
-      electronAPI.onMenuOpenFile((event, data) => {
+      electronAPI.onMenuOpenFile((_event, data) => {
         handlers.onOpenFile!(data.filePath, data.content);
       });
     }

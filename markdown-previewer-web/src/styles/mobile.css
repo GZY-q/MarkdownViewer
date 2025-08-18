@@ -1,0 +1,191 @@
+/* 移动端适配样式 */
+
+/* 基础移动端适配 */
+@media (max-width: 768px) {
+  .app {
+    height: 100vh;
+    height: 100dvh; /* 动态视口高度，避免移动端地址栏影响 */
+  }
+
+  .toolbar {
+    padding: 8px 12px;
+    min-height: 44px; /* iOS推荐的最小触摸目标 */
+  }
+
+  .toolbar-button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+    font-size: 16px; /* 防止iOS缩放 */
+  }
+
+  .resizable-panes {
+    flex-direction: column;
+  }
+
+  .resizer {
+    width: 100%;
+    height: 8px;
+    cursor: row-resize;
+  }
+
+  .editor-textarea {
+    font-size: 16px; /* 防止iOS缩放 */
+    padding: 12px;
+  }
+
+  .preview-content {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  /* 移动端滚动优化 */
+  .editor-textarea,
+  .preview-content {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+}
+
+/* 小屏幕设备 */
+@media (max-width: 480px) {
+  .toolbar {
+    padding: 6px 8px;
+  }
+
+  .toolbar-left,
+  .toolbar-right {
+    gap: 4px;
+  }
+
+  .toolbar-button {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 6px;
+  }
+
+  .editor-textarea,
+  .preview-content {
+    padding: 8px;
+  }
+
+  .preview-content {
+    font-size: 15px;
+  }
+
+  .preview-content h1 {
+    font-size: 1.8em;
+  }
+
+  .preview-content h2 {
+    font-size: 1.4em;
+  }
+
+  .preview-content h3 {
+    font-size: 1.2em;
+  }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+  .toolbar-button:hover {
+    background-color: var(--toolbar-button-hover);
+  }
+
+  .toolbar-button:active {
+    background-color: var(--toolbar-button-active);
+    transform: scale(0.95);
+  }
+
+  .theme-toggle-button:active {
+    transform: scale(0.95);
+  }
+
+  /* 增大可点击区域 */
+  .toolbar-button {
+    position: relative;
+  }
+
+  .toolbar-button::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+  }
+}
+
+/* 横屏模式 */
+@media (orientation: landscape) and (max-height: 500px) {
+  .toolbar {
+    padding: 4px 8px;
+    min-height: 36px;
+  }
+
+  .toolbar-button {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 4px;
+  }
+}
+
+/* 安全区域适配 (iPhone X及以上) */
+@supports (padding: max(0px)) {
+  .app {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .toolbar {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+}
+
+/* 深色模式下的移动端优化 */
+[data-theme="dark"] {
+  @media (max-width: 768px) {
+    .toolbar {
+      border-bottom-color: var(--border-primary);
+    }
+
+    .editor-textarea {
+      background-color: var(--editor-bg);
+      color: var(--editor-text);
+    }
+
+    .preview-content {
+      background-color: var(--preview-bg);
+      color: var(--preview-text);
+    }
+  }
+}
+
+/* 减少动画以节省电池 */
+@media (prefers-reduced-motion: reduce) {
+  .toolbar-button {
+    transition: none;
+  }
+
+  .theme-toggle-button {
+    transition: none;
+  }
+
+  .resizer {
+    transition: none;
+  }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+  .toolbar-button {
+    border: 1px solid var(--border-primary);
+  }
+
+  .resizer {
+    border: 1px solid var(--border-primary);
+  }
+}

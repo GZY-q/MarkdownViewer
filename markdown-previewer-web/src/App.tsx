@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import MarkdownEditor from './components/MarkdownEditor'
 import { ThemeProvider } from './contexts/ThemeContext'
 import 'highlight.js/styles/github.css'
 import 'highlight.js/styles/github-dark.css'
 import './styles/themes.css'
+import './styles/mobile.css'
 import './App.css'
 
 function App() {

@@ -21,8 +21,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e1e5e9;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-primary);
   min-height: 48px;
 }
 
@@ -31,7 +31,7 @@
   margin: 0;
   font-size: 14px;
   font-weight: 600;
-  color: #24292f;
+  color: var(--text-primary);
 }
 
 .editor-stats {
@@ -59,27 +59,27 @@
   font-size: 14px;
   line-height: 1.5;
   resize: none;
-  background-color: #ffffff;
-  color: #24292f;
+  background-color: var(--editor-bg);
+  color: var(--editor-text);
 }
 
 .editor-textarea::placeholder {
-  color: #8c959f;
+  color: var(--text-secondary);
 }
 
 .editor-textarea:focus {
-  background-color: #ffffff;
+  background-color: var(--editor-bg);
 }
 
 .preview-content {
   flex: 1;
   padding: 16px;
   overflow-y: auto;
-  background-color: #ffffff;
+  background-color: var(--preview-bg);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: #24292f;
+  color: var(--preview-text);
 }
 
 /* Markdown样式 */
@@ -93,17 +93,18 @@
   margin-bottom: 16px;
   font-weight: 600;
   line-height: 1.25;
+  color: var(--text-primary);
 }
 
 .preview-content h1 {
   font-size: 2em;
-  border-bottom: 1px solid #d1d9e0;
+  border-bottom: 1px solid var(--border-primary);
   padding-bottom: 0.3em;
 }
 
 .preview-content h2 {
   font-size: 1.5em;
-  border-bottom: 1px solid #d1d9e0;
+  border-bottom: 1px solid var(--border-primary);
   padding-bottom: 0.3em;
 }
 
@@ -121,19 +122,22 @@
 
 .preview-content h6 {
   font-size: 0.85em;
-  color: #656d76;
+  color: var(--text-secondary);
 }
 
 .preview-content p {
   margin-top: 0;
   margin-bottom: 16px;
+  color: var(--preview-text);
 }
 
 .preview-content blockquote {
   padding: 0 1em;
-  color: #656d76;
-  border-left: 0.25em solid #d1d9e0;
+  color: var(--text-secondary);
+  border-left: 0.25em solid var(--border-primary);
   margin: 0 0 16px 0;
+  background: var(--bg-secondary);
+  border-radius: 0 6px 6px 0;
 }
 
 .preview-content blockquote > :first-child {
@@ -159,9 +163,10 @@
   padding: 0.2em 0.4em;
   margin: 0;
   font-size: 85%;
-  background-color: #f6f8fa;
+  background-color: var(--bg-secondary);
   border-radius: 6px;
   font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  color: var(--preview-text);
 }
 
 .preview-content pre {
@@ -169,7 +174,7 @@
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #f6f8fa;
+  background-color: var(--bg-secondary);
   border-radius: 6px;
   margin-bottom: 16px;
 }
@@ -184,6 +189,7 @@
   word-wrap: normal;
   background-color: transparent;
   border: 0;
+  color: inherit;
 }
 
 .preview-content table {
@@ -197,20 +203,20 @@
 .preview-content table th,
 .preview-content table td {
   padding: 6px 13px;
-  border: 1px solid #d1d9e0;
+  border: 1px solid var(--border-primary);
 }
 
 .preview-content table th {
   font-weight: 600;
-  background-color: #f6f8fa;
+  background-color: var(--bg-secondary);
 }
 
 .preview-content table tr:nth-child(2n) {
-  background-color: #f6f8fa;
+  background-color: var(--bg-secondary);
 }
 
 .preview-content a {
-  color: #0969da;
+  color: var(--link-color, #0969da);
   text-decoration: none;
 }
 
@@ -228,7 +234,7 @@
   height: 0.25em;
   padding: 0;
   margin: 24px 0;
-  background-color: #d1d9e0;
+  background-color: var(--border-primary);
   border: 0;
 }
 

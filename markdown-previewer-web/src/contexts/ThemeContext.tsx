@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
+import { useCapacitor } from '../hooks/useCapacitor';
 
 // 主题类型定义
 export type Theme = 'light' | 'dark' | 'auto';
@@ -23,6 +24,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const savedTheme = localStorage.getItem('markdown-previewer-theme') as Theme;
     return savedTheme || 'auto';
   });
+
+  const { updateStatusBar } = useCapacitor();
 
   // 获取系统主题偏好
   const getSystemTheme = (): 'light' | 'dark' => {
@@ -51,7 +54,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', actualTheme);
     document.documentElement.className = actualTheme;
-  }, [actualTheme]);
+    
+    // 更新移动端状态栏
+    updateStatusBar(actualTheme === 'dark');
+  }, [actualTheme, updateStatusBar]);
 
   // 保存主题设置到localStorage
   useEffect(() => {
